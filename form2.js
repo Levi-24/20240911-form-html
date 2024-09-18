@@ -1,3 +1,4 @@
+
 const app = angular.module('formApp',[]);
 
 app.controller('FormController', ['$scope', '$http', function($scope, $http){
@@ -28,19 +29,21 @@ app.controller('FormController', ['$scope', '$http', function($scope, $http){
             formData.append('course', $scope.formData.course);
             formData.append('photo', document.getElementById('photo').files[0]);
             //console.log(formData);
-            for(let i of formData.entries()){
-                console.log(i[0] + ': ' + i[1]);
-            };
+           for(let i of formData.entries()){
+                console.log(i[0] + ':' + i[1]);
+           }
 
-            $http.post("form2.php", formData, {
-                transformRequest: angular.identity,
-                headers : {"Content-Type": undefined}
-            })
-            .then(function(response){
+           $http.post('form2.php', formData, {
+            transformRequest: angular.identity,
+            headers : {'Content-Type': undefined}
+           })
+           .then(function(response){
+            console.log('válasz:', response);
                 $scope.submissionResult = response.data;
                 $scope.formSubmitted = true;
-            }, function(error){
-                $scope.error = "Hiba az adat küldésekor" + error.status + "-" + error.statusText;
-            });
+           }, function(error){
+            $scope.error = 'Hiba az adatok küldésekor' + error.status + ' - ' + error.statusText;
+           })
+
     }
 }])
